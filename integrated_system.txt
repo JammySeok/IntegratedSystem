@@ -6,6 +6,8 @@ comment(id, boardid, userid, message, created_at)
 board_file(id, board_id, original_filename, saved_filename, file_size, content_type, upload_time)
 
 
+CREATE DATABASE integrateddb;
+
 
 CREATE TABLE users (
   userid VARCHAR(15) PRIMARY KEY,
