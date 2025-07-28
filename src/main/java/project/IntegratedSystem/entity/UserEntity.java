@@ -19,4 +19,12 @@ public class UserEntity {
     @Column
     private String password;
 
+    @Column
+    private String name;
+
+    @Column
+    private Integer position;
+
+    @Column
+    private String role;
 }

@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://thypeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +8,14 @@
 <body>
   <h1>Login Page</h1>
 
-  <h3>ID : <input id="id"></h3>
-  <h3>PW : <input id="password"></h3>
+  <form method="post" action="/login">
+    <h3>ID : <input type="text" name="id" id="id"></h3>
+    <h3>PW : <input type="password" name="password" id="password"></h3>
 
-  <input type="submit" value="로그인">
-  <input type="button" value="회원가입">
+    <input type="submit" value="로그인">
+    <input type="button" value="회원가입" onclick="location.href='/register'"> <br>
+    <a href="/"> 돌아가기 </a>
+  </form>
+
 </body>
 </html>
