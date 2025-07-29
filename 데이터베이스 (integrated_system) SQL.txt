@@ -1,0 +1,76 @@
+-- 회사 통합시스템 (Enterprise Integrated System) DB 구성
+-- department (id, name)
+-- employee (id, name, position, department_id, email, phone, create_at)
+-- login (id, username, password, employee_id, role, create_at)
+-- board (id, login_id, title, content, create_at, update_at)
+-- board_file (id, board_id, original_filename, saved_filename, file_size, content_type, upload_time)
+-- comment (id, board_id, login_id, message, create_at, update_at)
+
+
+
+CREATE DATABASE integrateddb;
+use integrateddb;
+
+
+CREATE TABLE department (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE employee (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    position INT,
+    department_id INT,
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (department_id) REFERENCES department(id)
+);
+
+
+CREATE TABLE login (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    employee_id INT,
+    role INT NOT NULL DEFAULT 2,
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
+
+CREATE TABLE board (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login_id INT NOT NULL,
+    title VARCHAR(30) NOT NULL,
+    content TEXT NOT NULL,
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP NULL,
+    FOREIGN KEY (login_id) REFERENCES login(id)
+);
+
+
+CREATE TABLE board_file (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    board_id INT NOT NULL,
+    original_filename VARCHAR(50) NOT NULL,
+    saved_filename VARCHAR(50) NOT NULL,
+    file_size BIGINT NOT NULL,
+    content_type VARCHAR(100),
+    upload_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (board_id) REFERENCES board(id)
+);
+
+
+CREATE TABLE comment (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    board_id INT NOT NULL,
+    login_id INT NOT NULL,
+    message TEXT NOT NULL,
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP NULL,
+    FOREIGN KEY (board_id) REFERENCES board(id),
+    FOREIGN KEY (login_id) REFERENCES login(id)
+);

@@ -1,0 +1,98 @@
+회사 통합시스템 (Enterprise Integrated System)
+
+데이터베이스 구성
+[department table]
+- id Int notnull 기본키 AI
+- name String notnull
+
+[employee table]
+- id Int notnull 기본키 AI
+- name String notnull 
+- position Int
+- department_id Int 외래키(department.id)
+- email String notnull
+- phone String notnull
+- create_at timestamp 
+
+[login table]
+- id Int notnull 기본키 AI
+- username String notnull 후보키
+- password String notnull 
+- employee_id Int 외래키(employee.id)
+- role Int notnull 기본값(2)
+- create_at timestamp notnull 기본값(현재날짜)
+
+[board table]
+- id Int notnull 기본키 AI
+- login_id Int notnull 외래키(login.id)
+- title String notnull
+- content String notnull
+- create_at timestamp notnull 기본값(현재날짜)
+- update_at timestamp notnull 
+
+[board_file table]
+id Int notnull 기본키 AI
+board_id Int notnull 외래키(board.id)
+original_filename String nonull
+saved_filename String notnull
+file_size Int notnull
+content_type String
+upload_time timestamp notnull 기본값(현재날짜)
+
+[comment table]
+- id Int notnull 기본키 AI
+- board_id Int notnull 외래키(board.id)
+- login_id Int notnull 외래키(login.id)
+- message String notnull
+- create_at timestamp notnull 기본값(현재날짜)
+- update_at timestamp notnull 
+
+
+
+코드 구성
+<class> EmployeeEntity
+<class> EmployeeDTO
+<class> EmployeeController
+<<interface>> EmployeeService
+  -> <class> EmployeeServiceImp : 회사원 CRUD 기능
+<<interface>> EmployeeRepository
+  -> <class> MemoryEmployeeRepositoryImp
+  -> <class> DBEmployeeRepositoryImp
+
+<class> LoginEntity
+<class> LoginDTO
+<class> LoginController
+<<interface>> LoginService
+  -> <class> AuthServiceImp : 회원가입/로그인/로그아웃/인증 (Auth 중심)
+  -> <class> UserServiceImp : 사용자 정보 변경/조회 (User Profile 중심)
+<<interface>> LoginRepository
+  -> <class> MemoryLoginRepositoryImp
+  -> <class> DBLoginRepositoryImp
+
+<class> BoardEntity
+<class> BoardDTO
+<class> BoardController
+<<interface>> BoardService
+  -> <class> BoardServiceImp : 게시판 CRUD 기능
+<<interface>> BoardRepository
+  -> <class> MemoryBoardRepositoryImp
+  -> <class> DBBoardRepositoryImp
+
+<class> FileEntity
+<class> FileDTO
+<<interface>> FileService
+  -> <class> FileServiceImp : 파일 업로드, 다운로드, 삭제 기능
+<<interface>> FileRepository
+  -> <class> DBFileRepositoryImp
+
+<class> CommentEntity
+<class> CommentDTO
+<class> CommentController
+<<interface>> CommentService
+  -> <class> CommentServiceImp : 댓글 CRUD 기능
+<<interface>> CommentRepository
+  -> <class> MemoryCommentRepositoryImp
+  -> <class> DBCommentRepositoryImp
+
+
+세션 / 페이징 추후 추가

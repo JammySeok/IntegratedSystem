@@ -1,4 +1,4 @@
 package project.IntegratedSystem.controller;
 
-public class LoginController {
+public class CommentController {
 }
