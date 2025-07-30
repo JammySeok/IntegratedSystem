@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://thypeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee List</title>
+</head>
+<body>
+<h1>사원 리스트</h1>
+
+  <table border="1">
+    <tr>
+      <th>이름</th>
+      <th>직급</th>
+      <th>이메일</th>
+      <th>전화번호</th>
+      <th>등록시간</th>
+    </tr>
+    <tr th:each = "employee: ${employeeList}">
+      <td th:text = "${employee.name}">name</td>
+      <td th:text = "${employee.position}">position</td>
+      <td th:text = "${employee.email}">email</td>
+      <td th:text = "${employee.phone}">phone</td>
+      <td th:text = "${employee.createAt}">createAt</td>
+    </tr>
+  </table>
+</body>
+</html>

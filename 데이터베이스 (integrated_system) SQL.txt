@@ -23,9 +23,9 @@ CREATE TABLE employee (
     name VARCHAR(20) NOT NULL,
     position INT,
     department_id INT,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(50),
     phone VARCHAR(20) NOT NULL,
-    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (department_id) REFERENCES department(id)
 );
 
@@ -74,3 +74,13 @@ CREATE TABLE comment (
     FOREIGN KEY (board_id) REFERENCES board(id),
     FOREIGN KEY (login_id) REFERENCES login(id)
 );
+
+
+INSERT INTO department (name) VALUES ('인사부');
+INSERT INTO department (name) VALUES ('영업부');
+INSERT INTO department (name) VALUES ('IT부');
+INSERT INTO department (name) VALUES ('법무부');
+INSERT INTO employee (name, position, email, phone) VALUES ('test', 0, 'test@naver.com', '010-1234-5678');
+INSERT INTO login (username, password, employee_id, role) VALUES ('test', '1234', 1, 0);
+INSERT INTO board (login_id, title, content) VALUES (1,'테스트용','테스트용 글입니다.');
+INSERT INTO comment (board_id, login_id, message) VALUES (1, 1, '댓글 태스트');
