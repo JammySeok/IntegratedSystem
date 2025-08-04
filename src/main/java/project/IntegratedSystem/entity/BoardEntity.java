@@ -1,6 +1,8 @@
 package project.IntegratedSystem.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -23,8 +25,10 @@ public class BoardEntity {
     private String content;
 
     @Column(name = "create_at", nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime createAt;
 
     @Column(name = "update_at")
+    @UpdateTimestamp
     private LocalDateTime updateAt;
 }

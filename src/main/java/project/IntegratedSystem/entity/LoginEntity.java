@@ -1,6 +1,7 @@
 package project.IntegratedSystem.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -26,5 +27,6 @@ public class LoginEntity {
     private Integer role;
 
     @Column(name = "create_at", nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime createAt;
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Employee</title>
+</head>
+<body>
+    <h1>Update Employee</h1>
+
+    <form method="post" th:action="@{/employeeList/update/{id}(id=${employee.id})}">
+        <input type="hidden" name="id" th:value="${employee.id}"/>
+
+        <h3>이름 : <input type="text" name="name" th:value="${employee.name}"></h3>
+        <h3>직급 : <input type="text" name="position" th:value="${employee.position}"></h3>
+        <h3>이메일 : <input type="text" name="email" th:value="${employee.email}"></h3>
+        <h3>전화번호 : <input type="text" name="phone" th:value="${employee.phone}"></h3>
+
+        <input type="submit" value="수정">
+        <a href="/employeeList">취소</a>
+    </form>
+</body>
+</html>

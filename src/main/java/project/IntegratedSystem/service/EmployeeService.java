@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeEntity> getList();
+    List<EmployeeDTO> getList();
+    void save(List<EmployeeDTO> employees);
+    void delete(Integer id);
+    EmployeeDTO detail(Integer id);
 }
