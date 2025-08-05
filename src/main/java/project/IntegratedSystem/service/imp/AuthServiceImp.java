@@ -1,6 +1,20 @@
 package project.IntegratedSystem.service.imp;
 
-import project.IntegratedSystem.service.LoginService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import project.IntegratedSystem.service.AuthService;
 
-public class AuthServiceImp implements LoginService {
+@Service
+@AllArgsConstructor
+public class AuthServiceImp implements AuthService {
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void signup() {
+
+    }
 }

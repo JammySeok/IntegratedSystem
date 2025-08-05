@@ -9,12 +9,18 @@
 
     <table border="1">
         <tr>
-            <th>Id</th>
-            <th>Password</th>
+            <th style="display:none">Id</th>
+            <th>username</th>
+            <th>password</th>
+            <th>role</th>
+            <th>createAt</th>
         </tr>
         <tr th:each = "user: ${userList}">
-            <td th:text = "${user.userid}">id</td>
+            <td th:text = "${user.id}" style="display:none">id</td>
+            <td th:text = "${user.username}">username</td>
             <td th:text = "${user.password}">password</td>
+            <td th:text = "${user.role}">role</td>
+            <td th:text = "${user.createAt}">createAt</td>
         </tr>
     </table>
 </body>

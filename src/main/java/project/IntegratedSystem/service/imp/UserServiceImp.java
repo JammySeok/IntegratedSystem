@@ -1,6 +1,41 @@
 package project.IntegratedSystem.service.imp;
 
-import project.IntegratedSystem.service.LoginService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import project.IntegratedSystem.dto.LoginDTO;
+import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.mapper.UserMapper;
+import project.IntegratedSystem.repository.LoginRepository;
+import project.IntegratedSystem.service.UserService;
 
-public class UserServiceImp implements LoginService {
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class UserServiceImp implements UserService {
+
+    LoginRepository loginRepository;
+
+    @Override
+    public List<LoginDTO> getList() {
+        List<LoginEntity> entities = loginRepository.findAll();
+        return entities.stream()
+                .map(UserMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public void getProfile() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
 }
