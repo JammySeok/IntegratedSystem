@@ -5,6 +5,6 @@ import project.IntegratedSystem.dto.LoginDTO;
 import java.util.List;
 
 public interface AuthService {
-    void login();
+    LoginDTO login(LoginDTO loginDTO);
     void signup();
 }

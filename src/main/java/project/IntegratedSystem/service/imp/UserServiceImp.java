@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
 
-    LoginRepository loginRepository;
+    private final LoginRepository loginRepository;
 
     @Override
     public List<LoginDTO> getList() {
