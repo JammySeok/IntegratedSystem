@@ -23,12 +23,12 @@ public class EmployeeController {
         List<EmployeeDTO> employeeList = employeeService.getList();
         model.addAttribute("employeeList", employeeList);
 
-        return "/employee/employeeListPage";
+        return "/employee/employeeList";
     }
 
     @GetMapping("/employeeAdd")
     public String addEmployee() {
-        return "employee/employeeAddPage";
+        return "employee/employeeAdd";
     }
 
     @PostMapping("/employeeAdd")
@@ -47,11 +47,11 @@ public class EmployeeController {
     public String detail(@PathVariable("id") Integer id, Model model) {
         EmployeeDTO employee = employeeService.detail(id);
         model.addAttribute("employee", employee);
-        return "employee/employeeUpdatePage";
+        return "employee/employeeUpdate";
     }
 
     @PostMapping("/employeeList/update/{id}")
-    public String update(@PathVariable Integer id, EmployeeDTO employee) {
+    public String update(@PathVariable("id") Integer id, EmployeeDTO employee) {
         employee.setId(id);
         // save 메서드로 update 처리 (id가 존재하면 update)
         employeeService.save(List.of(employee));

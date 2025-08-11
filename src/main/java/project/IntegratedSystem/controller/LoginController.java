@@ -40,6 +40,12 @@ public class LoginController {
         return "login/signupPage";
     }
 
+    @PostMapping("/signup")
+    public String addUser(@ModelAttribute LoginDTO login) {
+        authService.signup(List.of(login));
+        return "redirect:/login";
+    }
+
     @GetMapping("/userList")
     public String userList(Model model) {
         List<LoginDTO> user = userService.getList();

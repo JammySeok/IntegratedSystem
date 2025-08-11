@@ -29,7 +29,11 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public void signup() {
+    public void signup(List<LoginDTO> login) {
+        List<LoginEntity> entities = login.stream()
+                .map(UserMapper::toEntity)
+                .toList();
 
+        loginRepository.saveAll(entities);
     }
 }

@@ -25,7 +25,7 @@ public class UserMapper {
         entity.setId(dto.getId());
         entity.setPassword(dto.getPassword());
         entity.setUsername(dto.getUsername());
-        entity.setRole(dto.getRole());
+        entity.setRole(dto.getRole() != null ? dto.getRole() : 2);
         entity.setCreateAt(dto.getCreateAt());
         return entity;
     }
