@@ -3,6 +3,8 @@ package project.IntegratedSystem.service.imp;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.IntegratedSystem.dto.LoginDTO;
+import project.IntegratedSystem.dto.SignupDTO;
+import project.IntegratedSystem.dto.UserDTO;
 import project.IntegratedSystem.entity.LoginEntity;
 import project.IntegratedSystem.mapper.UserMapper;
 import project.IntegratedSystem.repository.LoginRepository;
@@ -17,8 +19,8 @@ public class AuthServiceImp implements AuthService {
     private final LoginRepository loginRepository;
 
     @Override
-    public LoginDTO login(LoginDTO loginDTO) {
-        LoginEntity loginEntity = loginRepository.findByUsername(loginDTO.getUsername())
+    public UserDTO login(LoginDTO loginDTO) {
+        LoginEntity loginEntity = loginRepository.findByUserid(loginDTO.getUserid())
                 .orElseThrow(() -> new RuntimeException("해당 사용자가 존재하지 않습니다."));
 
         if (!loginEntity.getPassword().equals(loginDTO.getPassword())) {
@@ -29,11 +31,13 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public void signup(List<LoginDTO> login) {
-        List<LoginEntity> entities = login.stream()
-                .map(UserMapper::toEntity)
-                .toList();
+    public void signup(SignupDTO signupDTO) {
+        if (loginRepository.findByUserid(signupDTO.getUserid()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 아이디입니다.");
+        }
 
-        loginRepository.saveAll(entities);
+        LoginEntity entity = UserMapper.toEntity(signupDTO);
+
+        loginRepository.save(entity);
     }
 }

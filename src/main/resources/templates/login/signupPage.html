@@ -1,19 +1,42 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Register</title>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 
 <body>
-<h1>Register Page</h1>
+    <h1>Register Page</h1>
 
-<form method="post" action="/signup">
-  <h3>ID : <input type="text" name="username"></h3>
-  <h3>PW : <input type="password" name="password"></h3>
-  <h3>Name : <input type="text" name="name"></h3>
+    <form method="post" th:action="@{/signup}" th:object="${signupDTO}">
 
-  <input type="submit" value="회원가입">
-  <input type="button" value="취소" onclick="location.href='/login'">
-</form>
+        <div>
+            <h3>ID :
+                <input type="text" th:field="*{userid}">
+            </h3>
+            <div class="error" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}">
+                ID Error Message
+            </div>
+        </div>
+
+        <div>
+            <h3>PW :
+                <input type="password" th:field="*{password}">
+            </h3>
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                Password Error Message
+            </div>
+        </div>
+
+        <br>
+        <input type="submit" value="회원가입">
+        <input type="button" value="취소" th:onclick="|location.href='@{/login}'|">
+    </form>
 </body>
 </html>

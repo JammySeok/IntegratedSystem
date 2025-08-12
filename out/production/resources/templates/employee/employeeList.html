@@ -10,12 +10,12 @@
   <table border="1">
     <tr>
       <th style="display:none">직원번호</th>
-      <th>이름</th>
-      <th>직급</th>
-<!--      <th>부서</th>-->
-      <th>이메일</th>
-      <th>전화번호</th>
-      <th>등록시간</th>
+      <th th:text="#{label.employee.name}">이름</th>
+      <th th:text="#{label.employee.position}">직급</th>
+<!--      <th th:text="#{label.employee.department}">부서</th>-->
+      <th th:text="#{label.employee.email}">이메일</th>
+      <th th:text="#{label.employee.phone}">전화번호</th>
+      <th th:text="#{label.employee.createAt}">등록시간</th>
     </tr>
     <tr th:each = "employee: ${employeeList}">
       <td th:text = "${employee.id}" style="display:none">id</td>

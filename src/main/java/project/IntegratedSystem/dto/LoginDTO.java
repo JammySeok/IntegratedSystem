@@ -1,15 +1,14 @@
 package project.IntegratedSystem.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class LoginDTO {
 
-    private Integer id;
-    private String username;
+    @NotBlank(message = "{login.blank.id}")
+    private String userid;
+
+    @NotBlank(message = "{login.blank.password}")
     private String password;
-    private Integer role;
-    private LocalDateTime createAt;
 }

@@ -10,17 +10,22 @@
     <table border="1">
         <tr>
             <th style="display:none">Id</th>
-            <th>username</th>
+            <th>userid</th>
             <th>password</th>
             <th>role</th>
             <th>createAt</th>
         </tr>
         <tr th:each = "user: ${userList}">
             <td th:text = "${user.id}" style="display:none">id</td>
-            <td th:text = "${user.username}">username</td>
+            <td th:text = "${user.userid}">userid</td>
             <td th:text = "${user.password}">password</td>
             <td th:text = "${user.role}">role</td>
             <td th:text = "${user.createAt}">createAt</td>
+            <td>
+                <form th:action="@{/userList/{id}(id=${user.id})}" method="post">
+                    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                </form>
+            </td>
         </tr>
     </table>
 

@@ -1,13 +1,13 @@
 package project.IntegratedSystem.service;
 
-import project.IntegratedSystem.dto.LoginDTO;
+import project.IntegratedSystem.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<LoginDTO> getList();
+    List<UserDTO> getList();
     void getProfile();
     void update();
-    void delete();
+    void delete(Integer id);
 }
