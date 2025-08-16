@@ -2,7 +2,7 @@ package project.IntegratedSystem.service.imp;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.IntegratedSystem.dto.UserDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
 import project.IntegratedSystem.entity.LoginEntity;
 import project.IntegratedSystem.mapper.UserMapper;
 import project.IntegratedSystem.repository.LoginRepository;

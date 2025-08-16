@@ -1,10 +1,8 @@
 package project.IntegratedSystem.service;
 
-import project.IntegratedSystem.dto.LoginDTO;
-import project.IntegratedSystem.dto.SignupDTO;
-import project.IntegratedSystem.dto.UserDTO;
-
-import java.util.List;
+import project.IntegratedSystem.dto.login.LoginDTO;
+import project.IntegratedSystem.dto.login.SignupDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
 
 public interface AuthService {
 

@@ -1,4 +1,4 @@
-package project.IntegratedSystem.controller;
+package project.IntegratedSystem.controller.login;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -8,22 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import project.IntegratedSystem.dto.LoginDTO;
-import project.IntegratedSystem.dto.SignupDTO;
-import project.IntegratedSystem.dto.UserDTO;
+import project.IntegratedSystem.dto.login.LoginDTO;
+import project.IntegratedSystem.dto.login.SignupDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
 import project.IntegratedSystem.service.AuthService;
-import project.IntegratedSystem.service.UserService;
-
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class LoginController {
+public class AuthController {
 
     private final AuthService authService;
-    private final UserService userService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -32,7 +27,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginAuth(@ModelAttribute LoginDTO loginDTO, Model model, HttpSession session) {
+    public String loginAuth(@Valid @ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "login/loginPage";
+        }
+
         try {
             UserDTO loginUser = authService.login(loginDTO);
             session.setAttribute("loginUser", loginUser);
@@ -60,6 +59,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "login/signupPage";
         }
+
         try {
             authService.signup(signupDTO);
         } catch (RuntimeException e) {
@@ -68,18 +68,5 @@ public class LoginController {
         }
 
         return "redirect:/login";
-    }
-
-    @GetMapping("/userList")
-    public String userList(Model model) {
-        List<UserDTO> user = userService.getList();
-        model.addAttribute("userList", user);
-        return "login/userList";
-    }
-
-    @PostMapping("/userList/{id}")
-    public String delete(@PathVariable("id") Integer id) {
-        userService.delete(id);
-        return "redirect:/userList";
     }
 }

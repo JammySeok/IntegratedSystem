@@ -1,7 +1,6 @@
-package project.IntegratedSystem.dto;
+package project.IntegratedSystem.dto.login;
 
 import lombok.Data;
-import project.IntegratedSystem.entity.LoginEntity;
 
 import java.time.LocalDateTime;
 

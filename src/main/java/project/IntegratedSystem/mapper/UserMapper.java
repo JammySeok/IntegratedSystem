@@ -1,7 +1,7 @@
 package project.IntegratedSystem.mapper;
 
-import project.IntegratedSystem.dto.SignupDTO;
-import project.IntegratedSystem.dto.UserDTO;
+import project.IntegratedSystem.dto.login.SignupDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
 import project.IntegratedSystem.entity.LoginEntity;
 
 public class UserMapper {

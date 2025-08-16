@@ -1,30 +1,34 @@
 package project.IntegratedSystem.service.imp;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-import project.IntegratedSystem.dto.LoginDTO;
-import project.IntegratedSystem.dto.SignupDTO;
-import project.IntegratedSystem.dto.UserDTO;
+import project.IntegratedSystem.dto.login.LoginDTO;
+import project.IntegratedSystem.dto.login.SignupDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
 import project.IntegratedSystem.entity.LoginEntity;
 import project.IntegratedSystem.mapper.UserMapper;
 import project.IntegratedSystem.repository.LoginRepository;
 import project.IntegratedSystem.service.AuthService;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class AuthServiceImp implements AuthService {
 
     private final LoginRepository loginRepository;
+    private final MessageSource messageSource;
 
     @Override
     public UserDTO login(LoginDTO loginDTO) {
+
+        String errorMessage = messageSource.getMessage("login.fail.credentials", null, LocaleContextHolder.getLocale());
+
         LoginEntity loginEntity = loginRepository.findByUserid(loginDTO.getUserid())
-                .orElseThrow(() -> new RuntimeException("해당 사용자가 존재하지 않습니다."));
+                .orElseThrow(() -> new RuntimeException(errorMessage));
 
         if (!loginEntity.getPassword().equals(loginDTO.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new RuntimeException(errorMessage);
         }
 
         return UserMapper.toDTO(loginEntity);

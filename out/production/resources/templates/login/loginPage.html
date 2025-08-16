@@ -1,21 +1,48 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>login</title>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
-  <h1>Login Page</h1>
+<h1>Login Page</h1>
 
-  <form method="post" action="/login">
-    <h3>ID : <input type="text" name="userid"></h3>
-    <h3>PW : <input type="password" name="password" id="password"></h3>
+<form method="post" th:action="@{/login}" th:object="${loginDTO}">
 
+    <div th:if="${error}" class="error" th:text="${error}">
+        아이디 또는 비밀번호가 올바르지 않습니다.
+    </div>
+
+    <div>
+        <h3>ID :
+            <input type="text" th:field="*{userid}">
+        </h3>
+        <div class="error" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}">
+            ID Error Message
+        </div>
+    </div>
+
+    <div>
+        <h3>PW :
+            <input type="password" th:field="*{password}">
+        </h3>
+        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+            Password Error Message
+        </div>
+    </div>
+
+    <br>
     <input type="submit" value="로그인">
-    <input type="button" value="회원가입" onclick="location.href='/signup'"> <br>
-    <a href="/"> 뒤로가기 </a>
-  </form>
-
+    <input type="button" value="회원가입" th:onclick="|location.href='@{/signup}'|">
+</form>
 </body>
 </html>
