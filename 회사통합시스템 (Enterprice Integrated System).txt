@@ -1,3 +1,4 @@
+<< 구조 많이 바뀜 수정 필요 >>
 회사 통합시스템 (Enterprise Integrated System)
 
 데이터베이스 구성
@@ -8,7 +9,7 @@
 [employee table]
 - id Int notnull 기본키 AI
 - name String notnull 
-- position Int
+- position String
 - department_id Int 외래키(department.id)
 - email String notnull
 - phone String notnull
@@ -19,7 +20,7 @@
 - username String notnull 후보키
 - password String notnull 
 - employee_id Int 외래키(employee.id)
-- role Int notnull 기본값(2)
+- role String notnull 기본값(1)
 - create_at timestamp notnull 기본값(현재날짜)
 
 [board table]

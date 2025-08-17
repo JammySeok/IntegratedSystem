@@ -6,6 +6,6 @@ import project.IntegratedSystem.dto.login.UserDTO;
 
 public interface AuthService {
 
-    UserDTO login(LoginDTO loginDTO);
+//    UserDTO login(LoginDTO loginDTO);
     void signup(SignupDTO login);
 }

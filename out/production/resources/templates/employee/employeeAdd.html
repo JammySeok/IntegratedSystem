@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add Employee</title>
@@ -8,6 +8,8 @@
     <h1>Add Employee</h1>
 
     <form method="post" action="/employeeAdd">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         <h3>이름 : <input type="text" name="name"></h3>
         <h3>직급 : <input type="text" name="position"></h3>
         <h3>전화번호 : <input type="text" name="phone"></h3>

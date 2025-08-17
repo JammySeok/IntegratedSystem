@@ -3,6 +3,7 @@ package project.IntegratedSystem.mapper;
 
 import project.IntegratedSystem.dto.EmployeeDTO;
 import project.IntegratedSystem.entity.EmployeeEntity;
+import project.IntegratedSystem.enums.EmployeePosition;
 
 public class EmployeeMapper {
 
@@ -26,10 +27,9 @@ public class EmployeeMapper {
         EmployeeEntity entity = new EmployeeEntity();
         entity.setId(dto.getId());
         entity.setName(dto.getName());
-        entity.setPosition(dto.getPosition());
+        entity.setPosition(dto.getPosition() != null ? dto.getPosition() : EmployeePosition.STAFF);
         entity.setEmail(dto.getEmail());
         entity.setPhone(dto.getPhone());
-        entity.setCreateAt(dto.getCreateAt());
 
         return entity;
     }

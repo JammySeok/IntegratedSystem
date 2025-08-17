@@ -19,20 +19,24 @@ public class AuthServiceImp implements AuthService {
     private final LoginRepository loginRepository;
     private final MessageSource messageSource;
 
-    @Override
-    public UserDTO login(LoginDTO loginDTO) {
-
-        String errorMessage = messageSource.getMessage("login.fail.credentials", null, LocaleContextHolder.getLocale());
-
-        LoginEntity loginEntity = loginRepository.findByUserid(loginDTO.getUserid())
-                .orElseThrow(() -> new RuntimeException(errorMessage));
-
-        if (!loginEntity.getPassword().equals(loginDTO.getPassword())) {
-            throw new RuntimeException(errorMessage);
-        }
-
-        return UserMapper.toDTO(loginEntity);
-    }
+/**
+ * 이 login 메서드는 Spring Security의 인증 절차를 방해하므로 반드시 삭제하거나 주석 처리해야 합니다.
+ * 이제 로그인 처리는 전적으로 Spring Security가 담당하게 됩니다.
+ */
+//    @Override
+//    public UserDTO login(LoginDTO loginDTO) {
+//
+//        String errorMessage = messageSource.getMessage("login.fail.credentials", null, LocaleContextHolder.getLocale());
+//
+//        LoginEntity loginEntity = loginRepository.findByUserid(loginDTO.getUserid())
+//                .orElseThrow(() -> new RuntimeException(errorMessage));
+//
+//        if (!loginEntity.getPassword().equals(loginDTO.getPassword())) {
+//            throw new RuntimeException(errorMessage);
+//        }
+//
+//        return UserMapper.toDTO(loginEntity);
+//    }
 
     @Override
     public void signup(SignupDTO signupDTO) {

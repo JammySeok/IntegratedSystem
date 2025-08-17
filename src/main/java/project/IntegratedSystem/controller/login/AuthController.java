@@ -26,21 +26,21 @@ public class AuthController {
         return "login/loginPage";
     }
 
-    @PostMapping("/login")
-    public String loginAuth(@Valid @ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, Model model, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "login/loginPage";
-        }
-
-        try {
-            UserDTO loginUser = authService.login(loginDTO);
-            session.setAttribute("loginUser", loginUser);
-            return "redirect:/";
-        } catch (RuntimeException e) {
-            model.addAttribute("error", e.getMessage());
-            return "login/loginPage";
-        }
-    }
+//    @PostMapping("/login")
+//    public String loginAuth(@Valid @ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, Model model, HttpSession session) {
+//        if (bindingResult.hasErrors()) {
+//            return "login/loginPage";
+//        }
+//
+//        try {
+//            UserDTO loginUser = authService.login(loginDTO);
+//            session.setAttribute("loginUser", loginUser);
+//            return "redirect:/";
+//        } catch (RuntimeException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "login/loginPage";
+//        }
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

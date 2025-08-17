@@ -3,6 +3,7 @@ package project.IntegratedSystem.mapper;
 import project.IntegratedSystem.dto.login.SignupDTO;
 import project.IntegratedSystem.dto.login.UserDTO;
 import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.enums.UserRole;
 
 public class UserMapper {
 
@@ -26,7 +27,7 @@ public class UserMapper {
         entity.setId(dto.getId());
         entity.setPassword(dto.getPassword());
         entity.setUserid(dto.getUserid());
-        entity.setRole(dto.getRole() != null ? dto.getRole() : 2);
+        entity.setRole(dto.getRole() != null ? dto.getRole() : UserRole.GUEST);
         entity.setCreateAt(dto.getCreateAt());
         return entity;
     }
@@ -38,7 +39,7 @@ public class UserMapper {
         LoginEntity entity = new LoginEntity();
         entity.setUserid(dto.getUserid());
         entity.setPassword(dto.getPassword());
-        entity.setRole(2);
+        entity.setRole(UserRole.GUEST);
         return entity;
     }
 }

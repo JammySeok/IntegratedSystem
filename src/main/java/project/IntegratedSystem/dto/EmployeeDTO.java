@@ -1,6 +1,7 @@
 package project.IntegratedSystem.dto;
 
 import lombok.Data;
+import project.IntegratedSystem.enums.EmployeePosition;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +10,7 @@ public class EmployeeDTO {
 
     private Integer id;
     private String name;
-    private Integer position;
+    private EmployeePosition position;
     private String email;
     private String phone;
     private LocalDateTime createAt;

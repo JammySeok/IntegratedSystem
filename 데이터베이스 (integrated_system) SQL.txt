@@ -21,7 +21,7 @@ CREATE TABLE department (
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
-    position INT,
+    position VARCHAR(20),
     department_id INT,
     email VARCHAR(50),
     phone VARCHAR(20) NOT NULL,
@@ -32,10 +32,10 @@ CREATE TABLE employee (
 
 CREATE TABLE login (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(20) NOT NULL UNIQUE,
+    userid VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     employee_id INT,
-    role INT NOT NULL DEFAULT 2,
+    role VARCHAR(20) NOT NULL DEFAULT 'GUEST',
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
@@ -80,7 +80,7 @@ INSERT INTO department (name) VALUES ('인사부');
 INSERT INTO department (name) VALUES ('영업부');
 INSERT INTO department (name) VALUES ('IT부');
 INSERT INTO department (name) VALUES ('법무부');
-INSERT INTO employee (name, position, email, phone) VALUES ('test', 0, 'test@naver.com', '010-1234-5678');
-INSERT INTO login (username, password, employee_id, role) VALUES ('test', '1234', 1, 0);
+INSERT INTO employee (name, position, email, phone) VALUES ('test', 'STAFF', 'test@naver.com', '010-1234-5678');
+INSERT INTO login (userid, password, employee_id, role) VALUES ('root', '1234', 1, 'ADMIN');
 INSERT INTO board (login_id, title, content) VALUES (1,'테스트용','테스트용 글입니다.');
 INSERT INTO comment (board_id, login_id, message) VALUES (1, 1, '댓글 태스트');

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index Page</title>
+</head>
+<body>
+
+    <h1>Index Page</h1>
+    <hr>
+
+    <div sec:authorize="isAuthenticated()">
+        <p>
+            <span sec:authentication="name"></span>님, 환영합니다!
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" style="border:none; background:none; color:blue; text-decoration:underline; cursor:pointer;">
+                (로그아웃)
+            </button>
+        </form>
+        </p>
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+        <p>
+            <a th:href="@{/login}">로그인</a>이 필요합니다.
+        </p>
+    </div>
+
+    <hr>
+
+    <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
+        <a href="/userList">User List</a> <br>
+        <a href="/employeeList">Employee List Page</a> <br>
+        <a href="/employeeAdd">Employee Add Page</a> <br>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <a href="/admin/dashboard">관리자 대시보드</a> <br>
+    </div>
+
+</body>
+</html>

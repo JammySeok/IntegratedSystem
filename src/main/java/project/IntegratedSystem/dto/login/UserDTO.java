@@ -1,6 +1,7 @@
 package project.IntegratedSystem.dto.login;
 
 import lombok.Data;
+import project.IntegratedSystem.enums.UserRole;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,6 @@ public class UserDTO {
     private Integer id;
     private String userid;
     private String password;
-    private Integer role;
+    private UserRole role;
     private LocalDateTime createAt;
 }

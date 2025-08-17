@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>접근 거부</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        .container { border: 1px solid #ddd; padding: 40px; display: inline-block; }
+        h1 { color: #d9534f; }
+        a { text-decoration: none; color: #0275d8; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>접근 권한이 없습니다.</h1>
+    <p>요청하신 페이지에 접근할 수 있는 권한을 가지고 있지 않습니다.</p>
+    <p>관리자에게 문의하시거나, 올바른 계정으로 로그인했는지 확인해주세요.</p>
+    <br>
+    <a th:href="@{/}">홈으로 돌아가기</a>
+</div>
+</body>
+</html>

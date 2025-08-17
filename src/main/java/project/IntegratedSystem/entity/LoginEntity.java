@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import project.IntegratedSystem.enums.UserRole;
 
 import java.time.LocalDateTime;
 
@@ -27,8 +28,9 @@ public class LoginEntity {
     @JoinColumn(name="employee_id", nullable = false)
     private EmployeeEntity employee;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Integer role;
+    private UserRole role;
 
     @Column(name = "create_at", nullable = false, updatable = false)
     @CreationTimestamp

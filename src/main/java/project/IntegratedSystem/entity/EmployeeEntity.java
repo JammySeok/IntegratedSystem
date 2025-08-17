@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import project.IntegratedSystem.enums.EmployeePosition;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +21,9 @@ public class EmployeeEntity {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private Integer position;
+    private EmployeePosition position;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name="department_id")
