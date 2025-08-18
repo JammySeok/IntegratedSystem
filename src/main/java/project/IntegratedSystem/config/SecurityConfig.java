@@ -18,11 +18,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // HTTP 요청에 대한 접근 권한 설정
         http.authorizeHttpRequests(auth -> auth
-                // "/", "/login", "/signup" 등 정적 리소스나 시작 페이지는 모두에게 허용
-                .requestMatchers("/", "/login", "/signup", "/css/**", "/js/**", "/images/**").permitAll()
-                // "/admin/**" 경로는 "ADMIN" 역할을 가진 사용자에게만 허용
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                // "/user/**" 경로는 "USER" 또는 "ADMIN" 역할을 가진 사용자에게 허용
+                // "/", "/login", "/signup", "/error/**" 등 정적 리소스나 시작 페이지는 모두에게 허용
+                .requestMatchers("/", "/login", "/signup", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
+                // 경로는 "ADMIN" 역할을 가진 사용자에게만 허용
+                .requestMatchers("/admin/**", "/employeeList", "/employeeAdd", "/userList").hasRole("ADMIN")
+                // 경로는 "USER" 또는 "ADMIN" 역할을 가진 사용자에게 허용
                 .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 // 위에서 설정한 경로 외의 모든 요청은 인증된 사용자에게만 허용
                 .anyRequest().authenticated()
@@ -55,6 +55,12 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 // 쿠키 삭제 (예: JSESSIONID)
                 .deleteCookies("JSESSIONID")
+        );
+
+        // 접근 거부 예외 처리 설정
+        http.exceptionHandling(exception -> exception
+                // 접근 거부 시 이동할 페이지의 URL을 지정합니다.
+                .accessDeniedPage("/error/denied")
         );
 
         return http.build();

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import project.IntegratedSystem.dto.login.LoginDTO;
 import project.IntegratedSystem.dto.login.SignupDTO;
 import project.IntegratedSystem.dto.login.UserDTO;
@@ -21,8 +22,13 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
+
+        if (error != null) {
+            model.addAttribute("loginFailMsg", "아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
         model.addAttribute("loginDTO", new LoginDTO());
+
         return "login/loginPage";
     }
 

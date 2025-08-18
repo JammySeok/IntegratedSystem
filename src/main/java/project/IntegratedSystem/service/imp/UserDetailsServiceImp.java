@@ -1,4 +1,4 @@
-package project.IntegratedSystem.service;
+package project.IntegratedSystem.service.imp;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +15,7 @@ import project.IntegratedSystem.repository.LoginRepository;
 import java.util.Collections;
 
 @Service
-@RequiredArgsConstructor // final 필드에 대한 생성자를 자동으로 생성해줍니다.
+@RequiredArgsConstructor
 public class UserDetailsServiceImp implements UserDetailsService {
 
     private final LoginRepository loginRepository;
@@ -38,7 +38,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + loginEntity.getRole().name());
 
         return new User(
-                loginEntity.getUserid(), // UserDetails의 username
+                loginEntity.getUserid(),
                 loginEntity.getPassword(), // UserDetails의 password (암호화된 값)
                 Collections.singleton(grantedAuthority) // 사용자의 권한 목록
         );
