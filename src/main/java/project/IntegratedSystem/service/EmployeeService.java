@@ -10,6 +10,6 @@ public interface EmployeeService {
 
     List<EmployeeDTO> getList();
     void save(List<EmployeeDTO> employees);
-    void delete(Integer id);
     EmployeeDTO detail(Integer id);
+    void delete(Integer id);
 }

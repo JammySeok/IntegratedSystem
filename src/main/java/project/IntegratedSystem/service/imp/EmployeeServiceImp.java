@@ -35,14 +35,15 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public void delete(Integer id) {
-        employeeRepository.deleteById(id);
-    }
-
-    @Override
     public EmployeeDTO detail(Integer id) {
         EmployeeEntity entity = employeeRepository.findById(id).orElseThrow(
                 () -> new IllegalIdentifierException("해당 직원이 없습니다."));
         return EmployeeMapper.toDTO(entity);
     }
+
+    @Override
+    public void delete(Integer id) {
+        employeeRepository.deleteById(id);
+    }
+
 }

@@ -24,7 +24,7 @@ public class LoginEntity {
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="employee_id", nullable = false)
     private EmployeeEntity employee;
 

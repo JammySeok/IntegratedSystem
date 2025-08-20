@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Board List</title>
+</head>
+<body>
+    <h1>게시판</h1>
+
+    <a href="/addBoard"> 게시판 생성 </a>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Poster</th>
+            <th>Create At</th>
+        </tr>
+        <tr th:each="board : ${boardList}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.poster}"></td>
+            <td th:text="${board.createAt}"></td>
+        </tr>
+    </table>
+    <a href="/"> 뒤로가기 </a>
+</body>
+

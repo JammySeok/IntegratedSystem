@@ -23,7 +23,7 @@ public class SecurityConfig {
                 // 경로는 "ADMIN" 역할을 가진 사용자에게만 허용
                 .requestMatchers("/admin/**", "/employeeList", "/employeeAdd", "/userList").hasRole("ADMIN")
                 // 경로는 "USER" 또는 "ADMIN" 역할을 가진 사용자에게 허용
-                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/user/**", "/boardList").hasAnyRole("USER", "ADMIN")
                 // 위에서 설정한 경로 외의 모든 요청은 인증된 사용자에게만 허용
                 .anyRequest().authenticated()
         );

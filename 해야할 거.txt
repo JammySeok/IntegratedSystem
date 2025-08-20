@@ -1,0 +1,19 @@
+프로젝트 하면서 공부해야 할(한) 거
+- jpa로 spring과 DB 연결 (entity 설정)
+- MVC 구조 (Model, View, Controller) 
+- SOLID 구조 (interface 와 implement 따로 나눠서 확장 및 수정 편하게) 
+- CURD
+- thymeleaf
+- DTO와 Entity 분리, mapper로 데이터 연결
+- java vaild, 메시지/국제화
+- java session
+- java servlet의 filter, intercepter
+- spring security / userDetailService (인증 / 인가-페이지 접근)
+- transaction
+
+해결 해야하는 거
+- 로그인하지 않은 유저가 BoardList 누르면 -> login page 가고, 여기서 로그인을 하면 -> BoardList로 안가고 index Page로 이동하게됨. (이전 접속 데이터)
+- DB의 employee, login 테이블을 회원가입(signup) 할 때 알아서 연결이 되어야 하는데 이것을 어떤식으로 연결해야할까? 
+  (employee 테이블의 id와 login 테이블의 employee_id의 외래키 처리를 어떤식으로 해야할지)
+- 첨부파일 처리 어떻게 할지?
+- 페이징

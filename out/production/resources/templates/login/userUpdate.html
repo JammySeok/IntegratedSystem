@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Employee</title>
+</head>
+<body>
+    <h1>User Employee</h1>
+
+    <form method="post" th:action="@{/userList/update/{id}(id=${user.id})}">
+        <input type="hidden" name="id" th:value="${user.id}"/>
+
+        <h3>ID : <span th:text="${user.userid}"></span></h3>
+        <h3>권한 : <input type="text" name="role" th:value="${user.role}"></h3>
+        <h3>등록일 : <span th:text="${#temporals.format(user.createAt, 'yyyy-MM-dd HH:mm')}"></span></h3>
+
+        <input type="submit" value="수정">
+        <a href="/userList">취소</a>
+    </form>
+</body>
+</html>

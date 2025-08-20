@@ -29,4 +29,19 @@ public class UserController {
         userService.delete(id);
         return "redirect:/userList";
     }
+
+    @GetMapping("/userList/update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        UserDTO user = userService.detail(id);
+        model.addAttribute("user", user);
+        return "login/userUpdate";
+    }
+
+
+    @PostMapping("userList/update/{id}")
+    public String update(@PathVariable("id") Integer id, UserDTO user) {
+        userService.updateUser(id, user);
+
+        return "redirect:/userList";
+    }
 }
