@@ -11,14 +11,12 @@
         <tr>
             <th th:text="#{label.user.id}" style="display:none">Id</th>
             <th th:text="#{label.user.userid}">userid</th>
-            <th th:text="#{label.user.password}">password</th>
             <th th:text="#{label.user.role}">role</th>
             <th th:text="#{label.user.createAt}">createAt</th>
         </tr>
         <tr th:each="user: ${userList}">
             <td th:text="${user.id}" style="display:none">id</td>
             <td th:text="${user.userid}">userid</td>
-            <td th:text="${user.password}">password</td>
             <td th:text="${user.role}">role</td>
             <td th:text="${user.createAt}">createAt</td>
             <td>

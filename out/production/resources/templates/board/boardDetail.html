@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title th:text="${board.title}"></title> </head>
 <body>
+    <a th:href="@{/board/update/{id}(id=${board.id})}">수정</a> <br>
     <div>
         <div>
             제목 :
@@ -32,6 +33,5 @@
         </table>
     </div>
     <a href="/boardList"> 뒤로가기 </a>
-    <a th:href="@{/board/update/{id}(id=${board.id})}">수정</a>
 </body>
 </html>

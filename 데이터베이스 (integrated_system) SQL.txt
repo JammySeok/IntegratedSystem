@@ -34,7 +34,7 @@ CREATE TABLE login (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    employee_id INT,
+    employee_id INT NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'GUEST',
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (employee_id) REFERENCES employee(id)
@@ -80,7 +80,12 @@ INSERT INTO department (name) VALUES ('인사부');
 INSERT INTO department (name) VALUES ('영업부');
 INSERT INTO department (name) VALUES ('IT부');
 INSERT INTO department (name) VALUES ('법무부');
-INSERT INTO employee (name, position, email, phone) VALUES ('test', 'STAFF', 'test@naver.com', '010-1234-5678');
-INSERT INTO login (userid, password, employee_id, role) VALUES ('root', '1234', 1, 'ADMIN');
+INSERT INTO employee (name, position, email, phone) VALUES ('ADMIN', 'STAFF', 'ADMIN@naver.com', '010-0000-0000');
+
+관리자 유저는 웹에서 직접 회원 가입 하고 SQL로 권한을 ADMIN으로 변경 (이름 ADMIN, 연락처 010-0000-0000)
+
+-- 관리자 계정 회원가입 완료 후 (login Table의 id가 1일때)
+UPDATE login SET role = 'ADMIN' WHERE id = 1;
 INSERT INTO board (login_id, title, content) VALUES (1,'테스트용','테스트용 글입니다.');
 INSERT INTO comment (board_id, login_id, message) VALUES (1, 1, '댓글 태스트');
+

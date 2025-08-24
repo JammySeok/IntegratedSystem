@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Data
 public class SignupDTO {
 
-    private Integer id;
-
     @NotBlank(message = "{login.blank.id}")
     @Size(min = 4, max = 20, message = "{signup.user.id.error.length}")
     @Pattern(regexp = "^[a-z0-9]+$", message = "{signup.user.id.error.format}")
@@ -22,6 +20,9 @@ public class SignupDTO {
     // @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,16}$", message = "{signup.user.password.error.combination}")
     private String password;
 
-    private Integer role;
-    private LocalDateTime createAt;
+    @NotBlank(message = "{login.blank.name}")
+    private String name;
+
+    @NotBlank(message = "{login.blank.phone}")
+    private String phone;
 }

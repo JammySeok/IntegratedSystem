@@ -30,10 +30,10 @@
 
     <hr>
 
-    <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
-        <a href="/userList">User List</a> <br>
+    <div sec:authorize="hasAnyRole('ADMIN')">
         <a href="/employeeList">Employee List Page</a> <br>
         <a href="/employeeAdd">Employee Add Page</a> <br>
+        <a href="/userList">User List</a> <br>
     </div>
 
     <div sec:authorize="hasRole('ADMIN')">

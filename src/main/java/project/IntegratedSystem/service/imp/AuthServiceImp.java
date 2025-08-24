@@ -1,28 +1,32 @@
 package project.IntegratedSystem.service.imp;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import project.IntegratedSystem.dto.login.LoginDTO;
 import project.IntegratedSystem.dto.login.SignupDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.entity.EmployeeEntity;
 import project.IntegratedSystem.entity.LoginEntity;
-import project.IntegratedSystem.mapper.UserMapper;
+import project.IntegratedSystem.enums.UserRole;
+import project.IntegratedSystem.repository.EmployeeRepository;
 import project.IntegratedSystem.repository.LoginRepository;
 import project.IntegratedSystem.service.AuthService;
+import project.IntegratedSystem.mapper.UserMapper;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import project.IntegratedSystem.dto.login.LoginDTO;
+import project.IntegratedSystem.dto.login.UserDTO;
+
 
 @Service
 @AllArgsConstructor
 public class AuthServiceImp implements AuthService {
 
+    private final EmployeeRepository employeeRepository;
     private final LoginRepository loginRepository;
-    private final MessageSource messageSource;
+    private final PasswordEncoder passwordEncoder; // 비밀번호 암호화를 위해 추가
+    // private final MessageSource messageSource; // 로그인 로직이 주석처리되어 현재 미사용
 
-/**
- * 이 login 메서드는 Spring Security의 인증 절차를 방해하므로 반드시 삭제하거나 주석 처리해야 합니다.
- * 이제 로그인 처리는 전적으로 Spring Security가 담당하게 됩니다.
- */
 //    @Override
 //    public UserDTO login(LoginDTO loginDTO) {
 //
@@ -39,13 +43,29 @@ public class AuthServiceImp implements AuthService {
 //    }
 
     @Override
+    @Transactional // 여러 DB 작업을 하나의 단위로 묶기 위해 추가
     public void signup(SignupDTO signupDTO) {
+        // 1. 아이디 중복 확인
         if (loginRepository.findByUserid(signupDTO.getUserid()).isPresent()) {
-            throw new RuntimeException("이미 존재하는 아이디입니다.");
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
 
-        LoginEntity entity = UserMapper.toEntity(signupDTO);
+        // 2. 이름과 연락처로 직원 정보 조회
+        EmployeeEntity employeeEntity = employeeRepository.findByNameAndPhone(signupDTO.getName(), signupDTO.getPhone())
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 직원 정보가 없습니다. 관리자에게 문의하세요."));
 
-        loginRepository.save(entity);
+        // 3. 해당 직원 정보로 이미 가입된 계정이 있는지 확인
+        if (loginRepository.existsByEmployee(employeeEntity)) {
+            throw new IllegalArgumentException("이미 계정이 등록된 직원입니다.");
+        }
+
+        // 4. 모든 검증 통과 시, LoginEntity 생성 및 저장
+        LoginEntity loginEntity = new LoginEntity();
+        loginEntity.setUserid(signupDTO.getUserid());
+        loginEntity.setPassword(passwordEncoder.encode(signupDTO.getPassword()));
+        loginEntity.setRole(UserRole.USER);
+        loginEntity.setEmployee(employeeEntity);
+
+        loginRepository.save(loginEntity);
     }
 }
