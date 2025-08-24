@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/userList/update/{id}")
-    public String detail(@PathVariable("id") Integer id, Model model) {
+    public String updateForm(@PathVariable("id") Integer id, Model model) {
         UserDTO user = userService.detail(id);
         model.addAttribute("user", user);
         return "login/userUpdate";

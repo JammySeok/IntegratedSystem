@@ -44,7 +44,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employeeList/update/{id}")
-    public String detail(@PathVariable("id") Integer id, Model model) {
+    public String updateForm(@PathVariable("id") Integer id, Model model) {
         EmployeeDTO employee = employeeService.detail(id);
         model.addAttribute("employee", employee);
         return "employee/employeeUpdate";

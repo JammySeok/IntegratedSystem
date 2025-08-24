@@ -5,10 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import project.IntegratedSystem.entity.BoardEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository <BoardEntity, Integer> {
 
     // N+1 문제를 해결하기 위한 JOIN FETCH 쿼리 추가
     @Query("SELECT b FROM BoardEntity b JOIN FETCH b.login l JOIN FETCH l.employee")
     List<BoardEntity> findAllWithAuthor();
+
+    Optional<BoardEntity> findById(Integer id);
 }

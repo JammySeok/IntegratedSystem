@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${board.title}"></title> </head>
+<body>
+    <div>
+        <div>
+            제목 :
+            <span th:text="${board.title}">title</span>
+        </div>
+        <hr>
+        <div>
+            <p th:text="${board.content}">content</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        댓글
+        <table border="1">
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Message</th>
+                <th>CreateAt</th>
+            </tr>
+            <tr>
+                <td>No.</td>
+                <td>Name</td>
+                <td>Message</td>
+                <td>CreateAt</td>
+            </tr>
+        </table>
+    </div>
+    <a href="/boardList"> 뒤로가기 </a>
+    <a th:href="@{/board/update/{id}(id=${board.id})}">수정</a>
+</body>
+</html>
