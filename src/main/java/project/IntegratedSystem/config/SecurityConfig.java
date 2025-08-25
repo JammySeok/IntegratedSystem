@@ -19,8 +19,8 @@ public class SecurityConfig {
         // HTTP 요청에 대한 접근 권한 설정
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/signup", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
-                .requestMatchers("/admin/**", "/employeeList", "/employeeAdd", "/userList").hasRole("ADMIN")
-                .requestMatchers("/user/**", "/boardList").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/admin/**", "/userList").hasRole("ADMIN")
+                .requestMatchers("/board/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
         );
 
@@ -29,7 +29,6 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("userid")
-                .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")
                 .permitAll()
         );

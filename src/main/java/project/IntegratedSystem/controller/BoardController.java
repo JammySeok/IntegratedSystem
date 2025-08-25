@@ -1,81 +1,99 @@
 package project.IntegratedSystem.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import project.IntegratedSystem.dto.BoardDTO;
 import project.IntegratedSystem.service.BoardService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/board")
 public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/boardList")
+    // 게시글 목록
+    @GetMapping("/list")
     public String boardList(Model model) {
         List<BoardDTO> boardList = boardService.getList();
         model.addAttribute("boardList", boardList);
-
-        return "/board/boardList";
+        return "board/boardList";
     }
 
-    @GetMapping("/board/{id}")
-    public String boardDetail(@PathVariable Integer id, Model model) {
+    // 게시글 상세 보기
+    @GetMapping("/{id}")
+    public String boardDetail(@PathVariable("id") Integer id, Model model) {
+        BoardDTO board = boardService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + id));
+        model.addAttribute("board", board);
 
-        Optional<BoardDTO> boardOptional = boardService.findById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+            model.addAttribute("currentUserId", auth.getName());
+        }
 
-        if (boardOptional.isPresent()) {
-            BoardDTO board = boardOptional.get();
-            model.addAttribute("board", board);
-            return "/board/boardDetail";
-        }
-        else {
-            return "redirect:/boardList";
-        }
+        return "board/boardDetail";
     }
 
-    @GetMapping("/board/add")
-    public String addForm(Model model) {
+    // 게시글 작성 폼
+    @GetMapping("/add")
+    public String createForm(Model model) {
         model.addAttribute("board", new BoardDTO());
-
-        return "/board/boardAdd";
+        return "board/boardAdd";
     }
 
-    @PostMapping("/board/add")
-    public String addBoard(@ModelAttribute BoardDTO boardDTO) {
-        boardService.save(boardDTO);
+    // 게시글 작성 처리
+    @PostMapping("/add")
+    public String create(@ModelAttribute BoardDTO boardDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName();
 
-        return "redirect:/boardList";
+        boardService.create(boardDTO, currentUserId);
+        return "redirect:/board/list";
     }
 
-    @GetMapping("/board/update/{id}")
+    // 게시글 수정 폼
+    @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") Integer id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName();
 
-        Optional<BoardDTO> boardDTOOptional = boardService.findById(id);
+        BoardDTO board = boardService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + id));
 
-        if (boardDTOOptional.isPresent()) {
-            BoardDTO boardDTO = boardDTOOptional.get();
-            model.addAttribute("board", boardDTO);
-
-            return "/board/boardUpdate";
+        if (!board.getWriterId().equals(currentUserId)) {
+            throw new AccessDeniedException("이 게시글을 수정할 권한이 없습니다.");
         }
-        else {
-            return "redirect:/boardList";
-        }
+
+        model.addAttribute("board", board);
+        return "board/boardUpdate";
     }
 
-    @PostMapping("/board/update")
-    public String update(@ModelAttribute BoardDTO boardDTO) {
-        boardService.update(boardDTO);
+    // 게시글 수정 처리
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id, @ModelAttribute BoardDTO boardDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName();
 
-        return "redirect:/board/" + boardDTO.getId();
+        boardService.update(id, boardDTO, currentUserId);
+        return "redirect:/board/list";
+    }
+
+    // 게시글 삭제 처리
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName();
+
+        boardService.delete(id, currentUserId);
+
+        return "redirect:/board/list";
     }
 }

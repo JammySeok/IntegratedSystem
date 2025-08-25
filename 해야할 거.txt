@@ -5,20 +5,28 @@
 - thymeleaf
 - SOLID 구조 (interface 와 implement 따로 나눠서 확장 및 수정 편하게) 
 - DTO와 Entity 분리, mapper로 데이터 연결
-- java vaild, 메시지/국제화
+- java valid, 메시지/국제화
 - java session
-- java servlet의 filter, intercepter
+- java servlet의 filter, interceptor
 - spring security / userDetailService (인증 / 인가-페이지 접근)
+- 비밀번호 암호화 (Spring Security 의 password Encoding)
 - transaction
+- 페이징
+
 
 해결 해야하는 거
-- 로그인하지 않은 유저가 BoardList 누르면 -> login page 가고, 여기서 로그인을 하면 -> BoardList로 안가고 index Page로 이동하게됨. (이전 접속 데이터)
-- 만든 사용자만이 게시판 수정/삭제 할 수 있도록 (관리자는 삭제 가능)
 - 유저 프로필 관리 (설정) 
 - 첨부파일 처리 어떻게 할지?
 - 페이징
 
-
 해결한거
-- DB의 employee, login 테이블을 회원가입(signup) 할 때 알아서 연결이 되어야 하는데 이것을 어떤식으로 연결해야할까? 
+- 프로젝트 전체 구조 다시 구상 (SOLD 원칙 최대한 구현할 수 있도록 - interface와 implement)
+- CURD
+- valid(검증), 메시지/국제화
+- spring security / userDetailService (인증 / 인가-페이지 접근)
+- 게시판(Board) 기능에서 Employee 테이블의 이름(Poster) 가져오기 (employee.name -> login -> board)
+- 비밀번호 암호화 (Spring Security 의 password Encoding)
+- DB의 employee, login 테이블 외래키로 연결 된거 을 회원가입(signup) 처리
   -> ADMIN이 직원을 먼저 등록하고, 사용자가 회원가입 할 때 등록된 직원 테이블의 이름과 전화번호를 비교해서 있으면 추가
+- 게시글 작성 (user 와 board 연결)
+- 만든 사용자만이 게시판 수정/삭제 할 수 있도록 (관리자는 삭제 가능)

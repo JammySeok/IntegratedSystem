@@ -1,13 +1,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${board.title}"></title> </head>
+    <title th:text="${board.title}"></title>
+</head>
 <body>
-    <a th:href="@{/board/update/{id}(id=${board.id})}">수정</a> <br>
     <div>
         <div>
-            제목 :
-            <span th:text="${board.title}">title</span>
+            제목:
+            <span th:text="${board.title}">title</span> &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <div style="display: inline;" th:if="${board.writerId == currentUserId or #authorization.expression('hasRole(''ADMIN'')')}">
+                <a th:if="${board.writerId == currentUserId}" th:href="@{/board/update/{id}(id=${board.id})}">수정</a>
+                <form th:action="@{/board/delete/{id}(id=${board.id})}" method="post" style="display: inline;">
+                    <button type="submit" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</button>
+                </form>
+            </div>
+        </div>
+        <div> 게시자:
+            <span th:text="${board.writerName}">writerName</span>
         </div>
         <hr>
         <div>
@@ -32,6 +42,6 @@
             </tr>
         </table>
     </div>
-    <a href="/boardList"> 뒤로가기 </a>
+    <a th:href="@{/board/list}"> 뒤로가기 </a>
 </body>
 </html>

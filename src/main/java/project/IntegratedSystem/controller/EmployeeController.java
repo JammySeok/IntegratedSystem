@@ -3,10 +3,7 @@ package project.IntegratedSystem.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import project.IntegratedSystem.dto.EmployeeDTO;
 import project.IntegratedSystem.service.EmployeeService;
 
@@ -14,6 +11,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/admin")
 public class EmployeeController {
 
     private final EmployeeService employeeService;

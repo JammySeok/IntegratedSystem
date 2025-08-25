@@ -9,7 +9,8 @@ public class BoardDTO {
     private Integer id;
     private String title;
     private String content;
-    private String poster;
+    private String writerName;
+    private String writerId;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }

@@ -4,9 +4,8 @@
     <title>게시글 수정</title>
 </head>
 <body>
-
-<h1>게시글 수정</h1>
-    <form th:action="@{/board/update}" th:object="${board}" method="post">
+    <h1>게시글 수정</h1>
+    <form th:action="@{/board/update/{id}(id=${board.id})}" th:object="${board}" method="post">
         <input type="hidden" th:field="*{id}" />
 
         <div>
@@ -19,7 +18,7 @@
             <textarea th:field="*{content}" rows="15" style="width: 500px;"></textarea>
         </div>
         <button type="submit">저장</button>
-        <a th:href="@{/board/{id}(id=*{id})}">취소</a>
+        <a th:href="@{/board/{id}(id=${board.id})}">취소</a>
     </form>
 </body>
 </html>

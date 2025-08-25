@@ -30,18 +30,15 @@
 
     <hr>
 
-    <div sec:authorize="hasAnyRole('ADMIN')">
-        <a href="/employeeList">Employee List Page</a> <br>
-        <a href="/employeeAdd">Employee Add Page</a> <br>
-        <a href="/userList">User List</a> <br>
-    </div>
-
     <div sec:authorize="hasRole('ADMIN')">
+        <a href="/admin/employeeList">Employee List Page</a> <br>
+        <a href="/admin/employeeAdd">Employee Add Page</a> <br>
+        <a href="/userList">User List</a> <br>
         <a href="/admin/dashboard">관리자 대시보드</a> <br>
     </div> <br>
 
     <div>
-        <a href="/boardList">Board List</a> <br>
+        <a href="/board/list">Board List</a> <br>
     </div>
 </body>
 </html>

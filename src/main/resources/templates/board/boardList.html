@@ -12,13 +12,13 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Poster</th>
+            <th>Name</th>
             <th>Create At</th>
         </tr>
         <tr th:each="board : ${boardList}">
             <td th:text="${board.id}"></td>
             <td> <a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}"></a> </td>
-            <td th:text="${board.poster}"></td>
+            <td th:text="${board.writerName}"></td>
             <td th:text="${board.createAt}"></td>
         </tr>
     </table>

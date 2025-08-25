@@ -3,6 +3,7 @@ package project.IntegratedSystem.mapper;
 
 import project.IntegratedSystem.dto.BoardDTO;
 import project.IntegratedSystem.entity.BoardEntity;
+import project.IntegratedSystem.entity.EmployeeEntity;
 import project.IntegratedSystem.entity.LoginEntity;
 
 public class BoardMapper {
@@ -19,11 +20,10 @@ public class BoardMapper {
         dto.setUpdateAt(entity.getUpdateAt());
 
         LoginEntity login = entity.getLogin();
-        if (login != null && login.getEmployee() != null) {
-            dto.setPoster(login.getEmployee().getName());
-        } else {
-            dto.setPoster("작성자 없음");
-        }
+        EmployeeEntity employee = login.getEmployee();
+
+        dto.setWriterId(login.getUserid());
+        dto.setWriterName(employee.getName());
 
         return dto;
     }
@@ -32,11 +32,9 @@ public class BoardMapper {
         if (dto == null) return null;
 
         BoardEntity entity = new BoardEntity();
-
         entity.setId(dto.getId());
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());
-        entity.setCreateAt(dto.getCreateAt());
 
         return entity;
     }
