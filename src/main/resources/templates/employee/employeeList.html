@@ -26,8 +26,8 @@
       <td th:text="${employee.phone}">phone</td>
       <td th:text="${employee.createAt}">createAt</td>
       <td>
-        <form th:action="@{/employeeList/{id}(id=${employee.id})}" method="post">
-          <input type="button" value="수정" th:onclick="'location.href=\'' + @{/employeeList/update/{id}(id=${employee.id})} + '\''"/>
+        <form th:action="@{/admin/employeeList/{id}(id=${employee.id})}" method="post">
+          <input type="button" value="수정" th:onclick="'location.href=\'' + @{/admin/employeeList/update/{id}(id=${employee.id})} + '\''"/>
           <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
         </form>
       </td>

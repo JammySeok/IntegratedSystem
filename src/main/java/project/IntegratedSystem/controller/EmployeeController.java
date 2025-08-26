@@ -32,13 +32,13 @@ public class EmployeeController {
     @PostMapping("/employeeAdd")
     public String save(@ModelAttribute EmployeeDTO employee) {
         employeeService.save(List.of(employee));
-        return "redirect:/employeeList";
+        return "redirect:/admin/employeeList";
     }
 
     @PostMapping("/employeeList/{id}")
     public String delete(@PathVariable("id") Integer id) {
         employeeService.delete(id);
-        return "redirect:/employeeList";
+        return "redirect:/admin/employeeList";
     }
 
     @GetMapping("/employeeList/update/{id}")
@@ -54,6 +54,6 @@ public class EmployeeController {
         // save 메서드로 update 처리 (id가 존재하면 update)
         employeeService.save(List.of(employee));
 
-        return "redirect:/employeeList";
+        return "redirect:/admin/employeeList";
     }
 }
