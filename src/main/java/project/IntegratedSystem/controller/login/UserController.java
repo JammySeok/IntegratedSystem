@@ -1,12 +1,14 @@
 package project.IntegratedSystem.controller.login;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.security.CustomUserDetails;
 import project.IntegratedSystem.service.UserService;
 
 import java.util.List;
@@ -38,10 +40,20 @@ public class UserController {
     }
 
 
-    @PostMapping("userList/update/{id}")
+    @PostMapping("/userList/update/{id}")
     public String update(@PathVariable("id") Integer id, UserDTO user) {
         userService.updateUser(id, user);
 
         return "redirect:/userList";
+    }
+
+    @GetMapping("/myProfile")
+    public String myProfile(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        Integer currentUserId = userDetails.getId();
+
+        UserDTO user = userService.detail(currentUserId);
+        model.addAttribute("user", user);
+
+        return "login/myProfile";
     }
 }

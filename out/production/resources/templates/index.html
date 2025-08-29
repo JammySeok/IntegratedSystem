@@ -30,14 +30,15 @@
 
     <hr>
 
-    <div sec:authorize="hasRole('ADMIN')">
+    <div sec:authorize="hasRole('ADMIN')" id="admin">
         <a href="/admin/employeeList">Employee List Page</a> <br>
         <a href="/admin/employeeAdd">Employee Add Page</a> <br>
         <a href="/userList">User List</a> <br>
         <a href="/admin/dashboard">관리자 대시보드</a> <br>
     </div> <br>
 
-    <div>
+    <div id="user">
+        <a th:href="@{/myProfile}">My Profile</a> <br>
         <a href="/board/list">Board List</a> <br>
     </div>
 </body>
