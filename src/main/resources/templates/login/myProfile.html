@@ -8,18 +8,17 @@
     <h1>My Profile</h1>
     <hr>
 
-    <div th:if="${user != null}">
-        <p>아이디 :</p>
-        <p>이름 : </p>
-        <p>직위 : </p>
-        <p>전화번호 :</p>
-        <p>이메일 : </p>
+    <div th:if="${user != null and employee != null}">
+        <p>아이디 : <span th:text="${user.userid}">id</span></p>
+        <p>이름 : <span th:text="${employee.name}">name</span></p>
+        <p>직위 : <span th:text="${employee.position}">position</span></p>
+        <p>전화번호 : <span th:text="${employee.phone}">phone</span></p>
+        <p>이메일 : <span th:text="${employee.email}">email</span></p>
     </div>
+
     <div th:if="${user == null}">
         <p>사용자 정보를 불러올 수 없습니다.</p>
     </div>
-
-    <br>
 
     <a href="/"> 뒤로가기 </a>
 </body>

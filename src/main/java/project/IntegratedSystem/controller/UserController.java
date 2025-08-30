@@ -1,4 +1,4 @@
-package project.IntegratedSystem.controller.login;
+package project.IntegratedSystem.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.dto.EmployeeDTO;
+import project.IntegratedSystem.dto.user.UserDTO;
 import project.IntegratedSystem.security.CustomUserDetails;
+import project.IntegratedSystem.service.EmployeeService;
 import project.IntegratedSystem.service.UserService;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final EmployeeService employeeService;
 
     @GetMapping("/userList")
     public String userList(Model model) {
@@ -52,7 +55,10 @@ public class UserController {
         Integer currentUserId = userDetails.getId();
 
         UserDTO user = userService.detail(currentUserId);
+        EmployeeDTO employee = employeeService.detail(currentUserId);
+
         model.addAttribute("user", user);
+        model.addAttribute("employee", employee);
 
         return "login/myProfile";
     }

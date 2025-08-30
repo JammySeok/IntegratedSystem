@@ -1,11 +1,9 @@
-package project.IntegratedSystem.dto.login;
+package project.IntegratedSystem.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class SignupDTO {

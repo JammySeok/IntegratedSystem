@@ -1,7 +1,6 @@
 package project.IntegratedSystem.service;
 
-import project.IntegratedSystem.dto.EmployeeDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.dto.user.UserDTO;
 
 import java.util.List;
 

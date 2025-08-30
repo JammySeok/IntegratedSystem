@@ -4,7 +4,7 @@ package project.IntegratedSystem.mapper;
 import project.IntegratedSystem.dto.BoardDTO;
 import project.IntegratedSystem.entity.BoardEntity;
 import project.IntegratedSystem.entity.EmployeeEntity;
-import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.entity.UserEntity;
 
 public class BoardMapper {
 
@@ -19,7 +19,7 @@ public class BoardMapper {
         dto.setCreateAt(entity.getCreateAt());
         dto.setUpdateAt(entity.getUpdateAt());
 
-        LoginEntity login = entity.getLogin();
+        UserEntity login = entity.getLogin();
         EmployeeEntity employee = login.getEmployee();
 
         dto.setWriterId(login.getUserid());

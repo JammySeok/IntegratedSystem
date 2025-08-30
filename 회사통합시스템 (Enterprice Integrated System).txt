@@ -51,49 +51,68 @@ upload_time timestamp notnull 기본값(현재날짜)
 
 
 코드 구성
-<class> EmployeeEntity
-<class> EmployeeDTO
-<class> EmployeeController
-<<interface>> EmployeeService
-  -> <class> EmployeeServiceImp : 회사원 CRUD 기능
-<<interface>> EmployeeRepository
-  -> <class> MemoryEmployeeRepositoryImp
-  -> <class> DBEmployeeRepositoryImp
+controller 
+  <class> AuthController
+  <class> UserCsontroller
+  <class> BoardController
+  <class> CommentController
+  <class> EmployeeController
+  <class> ErrorController
+  <class> IndexController
 
-<class> LoginEntity
-<class> LoginDTO
-<class> LoginController
-<<interface>> LoginService
-  -> <class> AuthServiceImp : 회원가입/로그인/로그아웃/인증 (Auth 중심)
-  -> <class> UserServiceImp : 사용자 정보 변경/조회 (User Profile 중심)
-<<interface>> LoginRepository
-  -> <class> MemoryLoginRepositoryImp
-  -> <class> DBLoginRepositoryImp
+dto
+  (pakage) user
+    -> <class> LoginDTO
+    -> <class> SignupDTO
+    -> <class> UserDTO
+  <class> BoardDTO
+  <class> CommentDTO
+  <class> EmployeeDTO
+  <class> FileDTO
 
-<class> BoardEntity
-<class> BoardDTO
-<class> BoardController
-<<interface>> BoardService
-  -> <class> BoardServiceImp : 게시판 CRUD 기능
-<<interface>> BoardRepository
-  -> <class> MemoryBoardRepositoryImp
-  -> <class> DBBoardRepositoryImp
+entity
+  <class> BoardEntity
+  <class> CommentEntity
+  <class> EmployeeEntity
+  <class> FileEntity
+  <class> LoginEntity
 
-<class> FileEntity
-<class> FileDTO
-<<interface>> FileService
-  -> <class> FileServiceImp : 파일 업로드, 다운로드, 삭제 기능
-<<interface>> FileRepository
-  -> <class> DBFileRepositoryImp
+enums
+  <class> EmployeePosition
+  <class> UserRole
 
-<class> CommentEntity
-<class> CommentDTO
-<class> CommentController
-<<interface>> CommentService
-  -> <class> CommentServiceImp : 댓글 CRUD 기능
-<<interface>> CommentRepository
-  -> <class> MemoryCommentRepositoryImp
-  -> <class> DBCommentRepositoryImp
+mapper
+  <class> BoardMapper
+  <class> EmployeeMapper
+  <class> UserMapper
+
+repository
+  <class> BoardRepository
+  <class> CommentRepository
+  <class> EmployeeRepository
+  <class> FileRepository
+  <class> LoginRepository
+
+security
+  <class> CustomUserDetails
+  <class> SecurityConfig
+  <class> UserDetailsServiceImp
+
+service
+  (package) imp
+    -> <class> AuthService
+    -> <class> BoardService
+    -> <class> CommentService
+    -> <class> EmployeeService
+    -> <class> FileService
+    -> <class> UserService
+  <<interface>> AuthService
+  <<interface>> BoardService
+  <<interface>> CommentService
+  <<interface>> EmployeeService
+  <<interface>> FileService
+  <<interface>> UserService
 
 
-세션 / 페이징 추후 추가
+
+페이징 추후 추가

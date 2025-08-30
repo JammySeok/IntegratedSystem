@@ -3,13 +3,10 @@ package project.IntegratedSystem.service.imp;
 import lombok.AllArgsConstructor;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.stereotype.Service;
-import project.IntegratedSystem.dto.EmployeeDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
-import project.IntegratedSystem.entity.EmployeeEntity;
-import project.IntegratedSystem.entity.LoginEntity;
-import project.IntegratedSystem.mapper.EmployeeMapper;
+import project.IntegratedSystem.dto.user.UserDTO;
+import project.IntegratedSystem.entity.UserEntity;
 import project.IntegratedSystem.mapper.UserMapper;
-import project.IntegratedSystem.repository.LoginRepository;
+import project.IntegratedSystem.repository.UserRepository;
 import project.IntegratedSystem.service.UserService;
 
 import java.util.List;
@@ -18,11 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
 
-    private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<UserDTO> getList() {
-        List<LoginEntity> entities = loginRepository.findAll();
+        List<UserEntity> entities = userRepository.findAll();
         return entities.stream()
                 .map(UserMapper::toDTO)
                 .toList();
@@ -35,32 +32,32 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void save(List<UserDTO> user) {
-        List<LoginEntity> entities = user.stream()
+        List<UserEntity> entities = user.stream()
                 .map(UserMapper::toEntity)
                 .toList();
 
-        loginRepository.saveAll(entities);
+        userRepository.saveAll(entities);
     }
 
     @Override
     public UserDTO detail(Integer id) {
-        LoginEntity entity = loginRepository.findById(id).orElseThrow(
+        UserEntity entity = userRepository.findById(id).orElseThrow(
                 () -> new IllegalIdentifierException("해당 직원이 없습니다."));
         return UserMapper.toDTO(entity);
     }
 
     @Override
     public void updateUser(Integer id, UserDTO userDTO) {
-        LoginEntity loginEntity = loginRepository.findById(id)
+        UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalIdentifierException("해당 사용자를 찾을 수 없습니다. id: " + id));
 
-        loginEntity.setRole(userDTO.getRole());
+        userEntity.setRole(userDTO.getRole());
 
-        loginRepository.save(loginEntity);
+        userRepository.save(userEntity);
     }
 
     @Override
     public void delete(Integer id) {
-        loginRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

@@ -3,13 +3,13 @@ package project.IntegratedSystem.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import project.IntegratedSystem.entity.EmployeeEntity;
-import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.entity.UserEntity;
 
 import java.util.Optional;
 
 @Repository
-public interface LoginRepository extends JpaRepository <LoginEntity, Integer> {
+public interface UserRepository extends JpaRepository <UserEntity, Integer> {
 
-    Optional<LoginEntity> findByUserid(String userid);
+    Optional<UserEntity> findByUserid(String userid);
     boolean existsByEmployee(EmployeeEntity employee);
 }

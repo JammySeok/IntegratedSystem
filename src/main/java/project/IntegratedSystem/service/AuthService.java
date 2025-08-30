@@ -1,8 +1,6 @@
 package project.IntegratedSystem.service;
 
-import project.IntegratedSystem.dto.login.LoginDTO;
-import project.IntegratedSystem.dto.login.SignupDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.dto.user.SignupDTO;
 
 public interface AuthService {
 

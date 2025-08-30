@@ -1,13 +1,13 @@
 package project.IntegratedSystem.mapper;
 
-import project.IntegratedSystem.dto.login.SignupDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
-import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.dto.user.SignupDTO;
+import project.IntegratedSystem.dto.user.UserDTO;
+import project.IntegratedSystem.entity.UserEntity;
 import project.IntegratedSystem.enums.UserRole;
 
 public class UserMapper {
 
-    public static UserDTO toDTO(LoginEntity entity) {
+    public static UserDTO toDTO(UserEntity entity) {
         if(entity == null) return null;
 
         UserDTO dto = new UserDTO();
@@ -20,10 +20,10 @@ public class UserMapper {
         return dto;
     }
 
-    public static LoginEntity toEntity(UserDTO dto) {
+    public static UserEntity toEntity(UserDTO dto) {
         if (dto == null) return null;
 
-        LoginEntity entity = new LoginEntity();
+        UserEntity entity = new UserEntity();
         entity.setId(dto.getId());
         entity.setPassword(dto.getPassword());
         entity.setUserid(dto.getUserid());
@@ -33,10 +33,10 @@ public class UserMapper {
     }
 
     // SignupDTO -> LoginEntity
-    public static LoginEntity toEntity(SignupDTO dto) {
+    public static UserEntity toEntity(SignupDTO dto) {
         if (dto == null) return null;
 
-        LoginEntity entity = new LoginEntity();
+        UserEntity entity = new UserEntity();
         entity.setUserid(dto.getUserid());
         entity.setPassword(dto.getPassword());
         entity.setRole(UserRole.GUEST);

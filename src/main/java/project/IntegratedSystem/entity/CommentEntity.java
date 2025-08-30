@@ -20,7 +20,7 @@ public class CommentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="login_id", nullable = false)
-    private LoginEntity login;
+    private UserEntity login;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String message;

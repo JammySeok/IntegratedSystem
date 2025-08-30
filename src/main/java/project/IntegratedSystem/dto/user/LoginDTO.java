@@ -1,4 +1,4 @@
-package project.IntegratedSystem.dto.login;
+package project.IntegratedSystem.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

@@ -6,10 +6,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import project.IntegratedSystem.dto.BoardDTO;
 import project.IntegratedSystem.entity.BoardEntity;
-import project.IntegratedSystem.entity.LoginEntity;
+import project.IntegratedSystem.entity.UserEntity;
 import project.IntegratedSystem.mapper.BoardMapper;
 import project.IntegratedSystem.repository.BoardRepository;
-import project.IntegratedSystem.repository.LoginRepository;
+import project.IntegratedSystem.repository.UserRepository;
 import project.IntegratedSystem.service.BoardService;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BoardServiceImp implements BoardService {
 
-    private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
     public List<BoardDTO> getList() {
@@ -37,7 +37,7 @@ public class BoardServiceImp implements BoardService {
     @Transactional
     public void create(BoardDTO boardDTO, String currentUserId) {
         // 1. userid로 LoginEntity 조회
-        LoginEntity currentUser = loginRepository.findByUserid(currentUserId)
+        UserEntity currentUser = userRepository.findByUserid(currentUserId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + currentUserId));
 
         // 2. DTO를 Entity로 변환
@@ -75,7 +75,7 @@ public class BoardServiceImp implements BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다: " + boardId));
 
         // 2. 현재 로그인한 사용자 정보 조회
-        LoginEntity currentUser = loginRepository.findByUserid(currentUserId)
+        UserEntity currentUser = userRepository.findByUserid(currentUserId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + currentUserId));
 
         // 3. 권한 확인

@@ -1,6 +1,5 @@
-package project.IntegratedSystem.controller.login;
+package project.IntegratedSystem.controller;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import project.IntegratedSystem.dto.login.LoginDTO;
-import project.IntegratedSystem.dto.login.SignupDTO;
-import project.IntegratedSystem.dto.login.UserDTO;
+import project.IntegratedSystem.dto.user.LoginDTO;
+import project.IntegratedSystem.dto.user.SignupDTO;
 import project.IntegratedSystem.service.AuthService;
 
 @Controller
@@ -29,13 +27,13 @@ public class AuthController {
         }
         model.addAttribute("loginDTO", new LoginDTO());
 
-        return "login/loginPage";
+        return "auth/loginPage";
     }
 
 //    @PostMapping("/login")
 //    public String loginAuth(@Valid @ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, Model model, HttpSession session) {
 //        if (bindingResult.hasErrors()) {
-//            return "login/loginPage";
+//            return "auth/loginPage";
 //        }
 //
 //        try {
@@ -44,33 +42,33 @@ public class AuthController {
 //            return "redirect:/";
 //        } catch (RuntimeException e) {
 //            model.addAttribute("error", e.getMessage());
-//            return "login/loginPage";
+//            return "auth/loginPage";
 //        }
 //    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
+//
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate();
+//        return "redirect:/";
+//    }
 
     @GetMapping("/signup")
     public String signupForm(Model model) {
         model.addAttribute("signupDTO", new SignupDTO());
-        return "login/signupPage";
+        return "auth/signupPage";
     }
 
     @PostMapping("/signup")
     public String addUser(@Valid @ModelAttribute SignupDTO signupDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "login/signupPage";
+            return "auth/signupPage";
         }
 
         try {
             authService.signup(signupDTO);
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
-            return "login/signupPage";
+            return "auth/signupPage";
         }
 
         return "redirect:/login";

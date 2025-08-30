@@ -1,4 +1,4 @@
-package project.IntegratedSystem.dto.login;
+package project.IntegratedSystem.dto.user;
 
 import lombok.Data;
 import project.IntegratedSystem.enums.UserRole;
