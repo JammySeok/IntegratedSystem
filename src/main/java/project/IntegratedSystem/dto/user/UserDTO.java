@@ -13,4 +13,6 @@ public class UserDTO {
     private String password;
     private UserRole role;
     private LocalDateTime createAt;
+
+    private Integer employeeId;
 }

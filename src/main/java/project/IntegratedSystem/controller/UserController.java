@@ -55,7 +55,12 @@ public class UserController {
         Integer currentUserId = userDetails.getId();
 
         UserDTO user = userService.detail(currentUserId);
-        EmployeeDTO employee = employeeService.detail(currentUserId);
+        Integer employeeId = user.getEmployeeId();
+
+        EmployeeDTO employee = null;
+        if (employeeId != null) {
+            employee = employeeService.detail(employeeId);
+        }
 
         model.addAttribute("user", user);
         model.addAttribute("employee", employee);

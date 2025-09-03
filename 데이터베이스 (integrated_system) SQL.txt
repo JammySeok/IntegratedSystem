@@ -1,10 +1,10 @@
 -- 회사 통합시스템 (Enterprise Integrated System) DB 구성
 -- department (id, name)
 -- employee (id, name, position, department_id, email, phone, create_at)
--- login (id, username, password, employee_id, role, create_at)
--- board (id, login_id, title, content, create_at, update_at)
+-- user (id, username, password, employee_id, role, create_at)
+-- board (id, user_id, title, content, create_at, update_at)
 -- board_file (id, board_id, original_filename, saved_filename, file_size, content_type, upload_time)
--- comment (id, board_id, login_id, message, create_at, update_at)
+-- comment (id, board_id, user_id, message, create_at, update_at)
 
 
 
@@ -30,7 +30,7 @@ CREATE TABLE employee (
 );
 
 
-CREATE TABLE login (
+CREATE TABLE user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
@@ -43,12 +43,12 @@ CREATE TABLE login (
 
 CREATE TABLE board (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    login_id INT NOT NULL,
+    user_id INT NOT NULL,
     title VARCHAR(30) NOT NULL,
     content TEXT NOT NULL,
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP NULL,
-    FOREIGN KEY (login_id) REFERENCES login(id)
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 
@@ -67,12 +67,12 @@ CREATE TABLE board_file (
 CREATE TABLE comment (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     board_id INT NOT NULL,
-    login_id INT NOT NULL,
+    user_id INT NOT NULL,
     message TEXT NOT NULL,
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP NULL,
     FOREIGN KEY (board_id) REFERENCES board(id),
-    FOREIGN KEY (login_id) REFERENCES login(id)
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 
@@ -84,8 +84,8 @@ INSERT INTO employee (name, position, email, phone) VALUES ('ADMIN', 'STAFF', 'A
 
 관리자 유저는 웹에서 직접 회원 가입 하고 SQL로 권한을 ADMIN으로 변경 (이름 ADMIN, 연락처 010-0000-0000)
 
--- 관리자 계정 회원가입 완료 후 (login Table의 id가 1일때)
-UPDATE login SET role = 'ADMIN' WHERE id = 1;
-INSERT INTO board (login_id, title, content) VALUES (1,'테스트용','테스트용 글입니다.');
-INSERT INTO comment (board_id, login_id, message) VALUES (1, 1, '댓글 태스트');
+-- 관리자 계정 회원가입 완료 후 (user Table의 id가 1일때)
+UPDATE user SET role = 'ADMIN' WHERE id = 1;
+INSERT INTO board (user_id, title, content) VALUES (1,'테스트용','테스트용 글입니다.');
+INSERT INTO comment (board_id, user_id, message) VALUES (1, 1, '댓글 태스트');
 

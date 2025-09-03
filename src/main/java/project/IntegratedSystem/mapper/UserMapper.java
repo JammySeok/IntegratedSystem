@@ -2,6 +2,7 @@ package project.IntegratedSystem.mapper;
 
 import project.IntegratedSystem.dto.user.SignupDTO;
 import project.IntegratedSystem.dto.user.UserDTO;
+import project.IntegratedSystem.entity.EmployeeEntity;
 import project.IntegratedSystem.entity.UserEntity;
 import project.IntegratedSystem.enums.UserRole;
 
@@ -16,6 +17,11 @@ public class UserMapper {
         dto.setUserid(entity.getUserid());
         dto.setRole(entity.getRole());
         dto.setCreateAt(entity.getCreateAt());
+
+        EmployeeEntity employeeEntity = entity.getEmployee();
+        if (employeeEntity != null) {
+            dto.setEmployeeId(employeeEntity.getId());
+        }
 
         return dto;
     }
