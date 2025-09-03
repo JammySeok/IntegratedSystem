@@ -1,27 +1,68 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Board List</title>
+    <title>게시판 목록</title>
 </head>
 <body>
     <h1>게시판</h1>
 
-    <a th:href="@{/board/add}">게시글 작성</a>
-    <table border="1">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Name</th>
-            <th>Create At</th>
-        </tr>
-        <tr th:each="board : ${boardList}">
-            <td th:text="${board.id}"></td>
-            <td> <a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}"></a> </td>
-            <td th:text="${board.writerName}"></td>
-            <td th:text="${board.createAt}"></td>
-        </tr>
-    </table>
-    <a href="/"> 뒤로가기 </a>
-</body>
+    <div>
+        <a th:href="@{/board/add}">게시글 작성</a>
+    </div>
 
+    <table border="1">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${paging.content}">
+            <td th:text="${board.id}"></td>
+            <td>
+                <a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}"></a>
+            </td>
+            <td th:text="${board.writerName}"></td>
+            <td th:text="${#temporals.format(board.createAt, 'yyyy-MM-dd')}"></td>
+        </tr>
+        <tr th:if="${paging.empty}">
+            <td colspan="4">게시글이 존재하지 않습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${paging.totalPages > 1}">
+        <a th:href="@{/board/list(page=${paging.number - 1}, searchType=${searchType}, keyword=${keyword})}" th:if="${paging.hasPrevious()}">&laquo;</a>
+
+        <span th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                <span th:if="${pageNumber == nowPage}" th:text="${pageNumber}"></span>
+                <a th:if="${pageNumber != nowPage}" th:href="@{/board/list(page=${pageNumber - 1}, searchType=${searchType}, keyword=${keyword})}" th:text="${pageNumber}"></a>
+            </span>
+
+        <a th:href="@{/board/list(page=${paging.number + 1}, searchType=${searchType}, keyword=${keyword})}" th:if="${paging.hasNext()}">&raquo;</a>
+    </div>
+
+    <br/>
+
+    <div>
+        <form th:action="@{/board/list}" method="get">
+            <select name="searchType">
+                <option value="title" th:selected="${searchType == 'title'}">제목</option>
+                <option value="content" th:selected="${searchType == 'content'}">내용</option>
+                <option value="writer" th:selected="${searchType == 'writer'}">작성자</option>
+            </select>
+            <input type="text" name="keyword" th:value="${keyword}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <div>
+        <a href="/"> 뒤로가기 </a>
+    </div>
+</body>
+</html>

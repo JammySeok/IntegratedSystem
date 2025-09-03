@@ -2,6 +2,8 @@ package project.IntegratedSystem.service.imp;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import project.IntegratedSystem.dto.BoardDTO;
@@ -12,7 +14,6 @@ import project.IntegratedSystem.repository.BoardRepository;
 import project.IntegratedSystem.repository.UserRepository;
 import project.IntegratedSystem.service.BoardService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,11 +23,31 @@ public class BoardServiceImp implements BoardService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
-    public List<BoardDTO> getList() {
-        List<BoardEntity> entities = boardRepository.findAllWithAuthor();
-        return entities.stream()
-                .map(BoardMapper::toDTO)
-                .toList();
+    @Transactional
+    public Page<BoardDTO> getList(String searchType, String keyword, Pageable pageable) {
+        Page<BoardEntity> boardEntities;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            boardEntities = boardRepository.findAll(pageable);
+        }
+        else {
+            switch (searchType) {
+                case "title":
+                    boardEntities = boardRepository.findByTitleContaining(keyword, pageable);
+                    break;
+                case "content":
+                    boardEntities = boardRepository.findByContentContaining(keyword, pageable);
+                    break;
+                case "writer":
+                    boardEntities = boardRepository.findByWriterNameContaining(keyword, pageable);
+                    break;
+                default: // 혹시 모를 예외 상황
+                    boardEntities = boardRepository.findAll(pageable);
+                    break;
+            }
+        }
+
+        return boardEntities.map(BoardMapper::toDTO);
     }
 
     public Optional<BoardDTO> findById(Integer id) {
@@ -50,7 +71,7 @@ public class BoardServiceImp implements BoardService {
         boardRepository.save(boardEntity);
     }
 
-    // [수정] 게시글 수정: 수정할 내용, 게시글 id, 현재 로그인한 유저의 userid를 받음
+    // 게시글 수정: 수정할 내용, 게시글 id, 현재 로그인한 유저의 userid를 받음
     @Transactional
     public void update(Integer boardId, BoardDTO boardDTO, String currentUserId) {
         // 1. 수정할 게시글 조회
@@ -67,7 +88,7 @@ public class BoardServiceImp implements BoardService {
         boardEntity.setContent(boardDTO.getContent());
     }
 
-    // [추가] 게시글 삭제
+    // 게시글 삭제
     @Transactional
     public void delete(Integer boardId, String currentUserId) {
         // 1. 삭제할 게시글 조회
@@ -86,24 +107,5 @@ public class BoardServiceImp implements BoardService {
 
         // 4. 삭제
         boardRepository.delete(boardEntity);
-    }
-
-    public void save(BoardDTO boardDTO) {
-        BoardEntity boardEntity = BoardMapper.toEntity(boardDTO);
-        boardRepository.save(boardEntity);
-    }
-
-    public void addBoard(List<BoardDTO> board) {
-        List<BoardEntity> entities = board.stream()
-                .map(BoardMapper::toEntity)
-                .toList();
-
-        boardRepository.saveAll(entities);
-    }
-
-    public void update(BoardDTO boardDTO) {
-        BoardEntity boardEntity = BoardMapper.toEntity(boardDTO);
-
-        boardRepository.save(boardEntity);
     }
 }

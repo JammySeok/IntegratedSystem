@@ -1,6 +1,10 @@
 package project.IntegratedSystem.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import project.IntegratedSystem.dto.BoardDTO;
 import project.IntegratedSystem.service.BoardService;
 
-import java.util.List;
-
 @Controller
 @AllArgsConstructor
 @RequestMapping("/board")
@@ -19,11 +21,27 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    // 게시글 목록
+    // 게시글 목록 (페이징 / 검색)
     @GetMapping("/list")
-    public String boardList(Model model) {
-        List<BoardDTO> boardList = boardService.getList();
-        model.addAttribute("boardList", boardList);
+    public String boardList(Model model,
+                            @RequestParam(value="searchType", required = false, defaultValue = "title") String searchType,
+                            @RequestParam(value="keyword", required = false, defaultValue = "") String keyword,
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<BoardDTO> paging = boardService.getList(searchType, keyword, pageable);
+
+        int nowPage = paging.getNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, paging.getTotalPages());
+
+        model.addAttribute("paging", paging);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
+
         return "board/boardList";
     }
 
